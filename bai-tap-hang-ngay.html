@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bài tập mỗi ngày</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--tx:#1b2430;--mu:#667085;--pr:#2563eb;--ok:#15803d;--no:#dc2626;--bd:#dfe5ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1520;--card:#18212f;--tx:#e8edf5;--mu:#9aa6b8;--pr:#4f7cff;--ok:#4ade80;--no:#f87171;--bd:#2a3547;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1520;--card:#18212f;--tx:#e8edf5;--mu:#9aa6b8;--pr:#4f7cff;--ok:#4ade80;--no:#f87171;--bd:#2a3547;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#app{max-width:560px;margin:0 auto;padding:14px}
+h1{font-size:22px;margin:4px 0 12px}h2{font-size:15px;margin:20px 0 6px;color:var(--mu)}
+button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:8px 14px;min-height:44px;cursor:pointer}
+button.pr{background:var(--pr);border-color:var(--pr);color:#fff}button:disabled{opacity:.4}
+input{font:inherit;width:100%;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);margin:8px 0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin:10px 0}
+.seg{display:flex;gap:8px}.seg button{flex:1}.seg .on{background:var(--pr);color:#fff;border-color:var(--pr)}
+.dt{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:center}.dt>div{flex:1}.dt small{display:block;color:var(--mu)}.dt input{margin:4px 0 0}
+.sub{display:flex;align-items:center;gap:12px}.ic{font-size:30px}.gr{flex:1}.gr small{display:block;color:var(--mu)}.bt{display:flex;flex-direction:column;gap:6px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:8px 6px;border-radius:10px;cursor:pointer;flex-wrap:wrap}.row.cur{background:var(--bg)}
+.chip{font-style:normal;font-size:13px;margin-left:4px;padding:2px 8px;border-radius:99px;background:var(--bg);color:var(--mu)}.chip.ok{color:var(--ok);font-weight:600}
+.chips{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.n{display:flex;align-items:center;justify-content:center;min-height:44px;padding:0;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx)}
+.n.an{background:var(--pr);color:#fff;border-color:var(--pr)}.n.cu{outline:3px solid var(--pr);outline-offset:1px}.n.ok{color:var(--ok);border-color:var(--ok)}.n.bad{color:var(--no);border-color:var(--no)}
+.qt{font-size:19px;margin:6px 0 12px;font-weight:600}.qn{color:var(--mu);font-size:14px}
+.opt{display:flex;gap:10px;align-items:center;width:100%;text-align:left;margin:8px 0;font-size:17px}.opt b{width:28px;height:28px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex:none}
+.opt.sel{border-color:var(--pr);box-shadow:0 0 0 2px var(--pr)}
+.nav{display:flex;gap:8px;margin:10px 0}.nav button{flex:1}
+.big{font-size:56px;font-weight:700;color:var(--pr);line-height:1.1}.c{text-align:center}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.po{padding:6px 10px;border-radius:10px;margin:4px 0;border:1px solid var(--bd)}.po.c{border-color:var(--ok);color:var(--ok);font-weight:600}.po.w{border-color:var(--no);color:var(--no)}
+.card.g{border-left:5px solid var(--ok)}.card.r{border-left:5px solid var(--no)}
+.ex{margin-top:8px;padding:10px;border-radius:10px;background:var(--bg)}
+.flash{padding:10px 12px;border-radius:12px;background:var(--bg);border:1px solid var(--bd);margin:10px 0}
+.adult{margin-top:16px;width:100%}
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}.mo .card{width:100%;max-width:360px}
+.mu{color:var(--mu)}
+</style></head><body><div id="app"></div>
+<script>
+const ri=(r,a,b)=>a+Math.floor(r()*(b-a+1));
+const sh=(r,a)=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const F=(x,d=0)=>String(+(+x).toFixed(d)).replace('.',',');
+const H=s=>{let h=1779033703^s.length;for(let i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),3432918353);h=h<<13|h>>>19}return h>>>0};
+const R=a=>()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const mk=(r,q,c,w,e)=>{const o=sh(r,[c,...w]);return{q,o,a:o.indexOf(c),e}};
+const OP=(r,c,s,d,u)=>{if(typeof c=='string')return{c,w:s};const w=[];for(const k of sh(r,[1,-1,2,-2,3,-3,10,-10,11,12])){const v=+(c+k*s).toFixed(d+2);if(v>0&&v!==c&&!w.includes(v))w.push(v);if(w.length==3)break}return{c:F(c,d)+u,w:w.map(v=>F(v,d)+u)}};
+/* ===== TOÁN: sinh đề theo ngày. Mỗi mục: [đề, đáp án, bước nhảy/ds đáp án sai, số lẻ, đơn vị, lời giải] ===== */
+const M={3:[[
+r=>{const a=ri(r,4,9),b=ri(r,3,9),c=ri(r,2,10),x=a*b;return[`Mỗi hộp có ${a} cái bút. Lan mua ${b} hộp, rồi tặng bạn ${c} cái. Hỏi Lan còn lại bao nhiêu cái bút?`,x-c,1,0,' cái',`Số bút Lan mua: ${a} × ${b} = ${x} (cái). Số bút còn lại: ${x} − ${c} = ${x-c} (cái).`]},
+r=>{const a=ri(r,20,90),b=ri(r,3,9),c=ri(r,3,9),d=ri(r,5,19),m=b*c;return[`Giá trị của biểu thức ${a} + ${b} × ${c} − ${d} là:`,a+m-d,1,0,'',`Nhân trước, cộng trừ sau: ${b} × ${c} = ${m}; ${a} + ${m} = ${a+m}; ${a+m} − ${d} = ${a+m-d}.`]},
+r=>{const b=ri(r,3,9),q=ri(r,12,60),k=ri(r,1,b-1),x=q*b+k;return[`Một số chia cho ${b} được thương là ${q} và số dư là ${k}. Số đó là:`,x,1,0,'',`Số bị chia = thương × số chia + số dư = ${q} × ${b} + ${k} = ${x}.`]},
+r=>{const a=ri(r,12,60),b=ri(r,5,a-1),p=(a+b)*2;return[`Hình chữ nhật có chiều dài ${a} cm, chiều rộng ${b} cm. Chu vi hình chữ nhật là:`,p,2,0,' cm',`Chu vi = (dài + rộng) × 2 = (${a} + ${b}) × 2 = ${p} (cm).`]}],[
+r=>{const a=ri(r,101,399),b=ri(r,2,5);return[`Tính: ${a} × ${b} = ?`,a*b,10,0,'',`${a} × ${b} = ${a*b}.`]},
+r=>{const s=r()<.5,a=ri(r,3400,8000),b=ri(r,1100,3300);return[`Tính: ${a} ${s?'+':'−'} ${b} = ?`,s?a+b:a-b,10,0,'',`${a} ${s?'+':'−'} ${b} = ${s?a+b:a-b}.`]},
+r=>{const b=ri(r,2,9),q=ri(r,50,150);return[`Tính: ${q*b} : ${b} = ?`,q,1,0,'',`${q*b} : ${b} = ${q} (vì ${q} × ${b} = ${q*b}).`]},
+r=>{const a=ri(r,6,25),b=ri(r,3,8);return[`Nam có ${a} viên bi. Số bi của Bình gấp ${b} lần số bi của Nam. Bình có bao nhiêu viên bi?`,a*b,a,0,' viên',`Gấp lên ${b} lần thì nhân với ${b}: ${a} × ${b} = ${a*b} (viên bi).`]}],[
+r=>{const a=ri(r,2,9),b=ri(r,2,9);return[`${a} × ${b} = ?`,a*b,a,0,'',`${a} × ${b} = ${a*b} (bảng nhân ${a}).`]},
+r=>{const a=ri(r,2,9),b=ri(r,2,9);return[`${a*b} : ${a} = ?`,b,1,0,'',`${a*b} : ${a} = ${b} (vì ${a} × ${b} = ${a*b}).`]},
+r=>{const s=r()<.5,a=ri(r,35,99),b=ri(r,11,34);return[`Tính: ${a} ${s?'+':'−'} ${b} = ?`,s?a+b:a-b,10,0,'',`${a} ${s?'+':'−'} ${b} = ${s?a+b:a-b}.`]},
+r=>{const n=ri(r,1000,9998);return[`Số liền sau của ${n} là:`,n+1,1,0,'',`Số liền sau hơn số đó 1 đơn vị: ${n} + 1 = ${n+1}.`]}]],
+5:[[
+r=>{const v=ri(r,18,30)*2,t=ri(r,1,4)+.5,s=v*t;return[`Một ô tô đi với vận tốc ${v} km/giờ trong ${F(t,1)} giờ. Quãng đường ô tô đi được là:`,s,10,0,' km',`Quãng đường = vận tốc × thời gian = ${v} × ${F(t,1)} = ${s} (km).`]},
+r=>{const m=ri(r,3,12),N=20*m,k=ri(r,2,8),p=5*k,sd=m*k;return[`Cửa hàng có ${N} kg gạo, đã bán ${p}% số gạo đó. Số gạo còn lại là:`,N-sd,5,0,' kg',`Số gạo đã bán: ${N} × ${p} : 100 = ${sd} (kg). Số gạo còn lại: ${N} − ${sd} = ${N-sd} (kg).`]},
+r=>{const a=ri(r,4,20)*2,h=ri(r,3,15),s=a*h/2;return[`Hình tam giác có đáy ${a} cm và chiều cao ${h} cm. Diện tích hình tam giác là:`,s,2,0,' cm²',`Diện tích = đáy × chiều cao : 2 = ${a} × ${h} : 2 = ${s} (cm²).`]},
+r=>{const k=ri(r,6,40),S=5*k;return[`Tổng của hai số là ${S}. Số bé bằng 2/3 số lớn. Số lớn là:`,3*k,k,0,'',`Số bé là 2 phần, số lớn là 3 phần nên tổng là 5 phần. Mỗi phần: ${S} : 5 = ${k}. Số lớn: ${k} × 3 = ${3*k}.`]}],[
+r=>{const s=r()<.5,a=s?ri(r,100,999)/100:ri(r,300,999)/100,b=s?ri(r,100,500)/100:ri(r,100,299)/100,c=s?a+b:a-b;return[`Tính: ${F(a,2)} ${s?'+':'−'} ${F(b,2)} = ?`,c,.1,2,'',`${F(a,2)} ${s?'+':'−'} ${F(b,2)} = ${F(c,2)}.`]},
+r=>{const x=ri(r,12,95)/10,y=ri(r,2,9),c=Math.round(x*10*y)/10;return[`Tính: ${F(x,1)} × ${y} = ?`,c,.1,1,'',`${F(x,1)} × ${y} = ${F(c,1)}.`]},
+r=>{const n=ri(r,2,9),qt=ri(r,11,99),x=qt*n/10;return[`Tính: ${F(x,1)} : ${n} = ?`,qt/10,.1,1,'',`${F(x,1)} : ${n} = ${F(qt/10,1)}.`]},
+r=>{if(r()<.5){const h=ri(r,1,5)+.5;return[`${F(h,1)} giờ = ... phút`,h*60,30,0,' phút',`1 giờ = 60 phút nên ${F(h,1)} × 60 = ${h*60} (phút).`]}const k=ri(r,12,99)/10;return[`${F(k,1)} km = ... m`,Math.round(k*1000),100,0,' m',`1 km = 1000 m nên ${F(k,1)} × 1000 = ${Math.round(k*1000)} (m).`]}],[
+r=>{const p=sh(r,[10,20,25,50])[0],N=20*ri(r,2,15),c=N*p/100;return[`${p}% của ${N} là:`,c,2,0,'',`${p}% của ${N} = ${N} × ${p} : 100 = ${c}.`]},
+r=>{const a=ri(r,5,40);return[`Hình vuông có cạnh ${a} cm. Chu vi hình vuông là:`,a*4,a,0,' cm',`Chu vi hình vuông = cạnh × 4 = ${a} × 4 = ${a*4} (cm).`]},
+r=>{const a=ri(r,8,40),b=ri(r,4,a-1);return[`Hình chữ nhật có chiều dài ${a} cm, chiều rộng ${b} cm. Diện tích hình chữ nhật là:`,a*b,b,0,' cm²',`Diện tích = dài × rộng = ${a} × ${b} = ${a*b} (cm²).`]},
+r=>{const d=ri(r,5,15),a=ri(r,1,4),b=ri(r,1,4);return[`Tính: ${a}/${d} + ${b}/${d} = ?`,`${a+b}/${d}`,[`${a+b}/${2*d}`,`${a+b+1}/${d}`,`${a+b-1}/${d}`],0,'',`Hai phân số cùng mẫu số: cộng tử số, giữ nguyên mẫu số. ${a} + ${b} = ${a+b}, nên kết quả là ${a+b}/${d}.`]}]]};
+function math(r,g,i){const L=M[g][i<3?0:i<6?1:2],[q,c,s,d,u,e]=L[ri(r,0,L.length-1)](r),o=OP(r,c,s,d,u);return mk(r,q,o.c,o.w,e)}
+/* ===== TIẾNG VIỆT & TIẾNG ANH: kho câu hỏi, mỗi ngày bốc ngẫu nhiên theo ngày, xếp từ khó đến dễ ===== */
+const V3=[['cat','con mèo'],['dog','con chó'],['red','màu đỏ'],['book','quyển sách'],['apple','quả táo'],['mother','mẹ'],['school','trường học'],['teacher','giáo viên'],['window','cửa sổ'],['bicycle','xe đạp'],['bedroom','phòng ngủ'],['library','thư viện']];
+const V5=[['holiday','kỳ nghỉ'],['museum','bảo tàng'],['journey','chuyến đi'],['neighbour','hàng xóm'],['delicious','ngon'],['dangerous','nguy hiểm'],['enormous','khổng lồ'],['environment','môi trường']];
+const D={vi:{3:[
+{q:'Từ trái nghĩa với “{0}” là:',e:'“{0}” trái nghĩa với “{1}”.',d:[['to','nhỏ'],['nóng','lạnh'],['sáng','tối'],['cao','thấp'],['nhanh','chậm'],['vui','buồn'],['khen','chê'],['siêng năng','lười biếng'],['rộng rãi','chật hẹp'],['hiền lành','độc ác'],['dũng cảm','hèn nhát'],['trung thực','dối trá']]},
+{q:'Từ đồng nghĩa với “{0}” là:',e:'“{0}” đồng nghĩa với “{1}”.',d:[['mẹ','má'],['heo','lợn'],['bắp','ngô'],['chăm chỉ','cần cù'],['to lớn','khổng lồ'],['xinh đẹp','xinh xắn'],['dũng cảm','can đảm'],['tổ quốc','đất nước']]},
+{q:'Điền từ còn thiếu: {0}',e:'Câu đúng: “{0}”.',d:[['Uống nước nhớ ___','nguồn'],['Ăn quả nhớ kẻ trồng ___','cây'],['Có công mài sắt, có ngày nên ___','kim'],['Lá lành đùm lá ___','rách'],['Học thầy không tày học ___','bạn'],['Gần mực thì đen, gần đèn thì ___','sáng'],['Chị ngã em ___','nâng'],['Một cây làm chẳng nên non, ba cây chụm lại nên hòn núi ___','cao']]},
+{q:'Từ nào viết đúng chính tả?',e:'Viết đúng là “{1}”.',d:[['','chăm chỉ',['trăm chỉ','chăm trỉ','trăm trỉ']],['','giúp đỡ',['dúp đỡ','giúp đở','dúp đở']],['','sáng suốt',['xáng suốt','sáng xuốt','xáng xuốt']],['','nghỉ ngơi',['nghĩ ngơi','ngỉ ngơi','nghỉ ngơ']],['','trung thực',['chung thực','trung thựt','chung thựt']]]}],
+5:[
+{q:'Từ đồng nghĩa với “{0}” là:',e:'“{0}” đồng nghĩa với “{1}”.',d:[['tổ quốc','đất nước'],['bao la','mênh mông'],['bình minh','rạng đông'],['gan dạ','dũng cảm'],['hi vọng','mong ước'],['thâm thúy','sâu sắc']]},
+{q:'Từ trái nghĩa với “{0}” là:',e:'“{0}” trái nghĩa với “{1}”.',d:[['hòa bình','chiến tranh'],['đoàn kết','chia rẽ'],['tiết kiệm','lãng phí'],['khiêm tốn','kiêu căng'],['cao thượng','hèn hạ'],['gian dối','trung thực']]},
+{q:'Từ nào dưới đây là từ láy?',e:'“{1}” là từ láy (có tiếng lặp lại âm hoặc vần); các từ còn lại là từ ghép.',w:['học sinh','bàn ghế','xe đạp','nhà cửa','quần áo','đất nước'],d:['lấp lánh','xinh xắn','mênh mông','long lanh','rì rào','thập thò']},
+{q:'Điền từ còn thiếu: {0}',e:'Câu đúng: “{0}”.',d:[['Có chí thì ___','nên'],['Anh em như thể tay ___','chân'],['Thương người như thể thương ___','thân'],['Nước chảy đá ___','mòn'],['Đoàn kết là sức ___','mạnh'],['Tốt gỗ hơn tốt ___','nước sơn']]}]},
+en:{3:[
+{q:'Từ “{0}” trong tiếng Anh nghĩa là gì?',e:'“{0}” nghĩa là “{1}”.',d:V3},
+{q:'Từ tiếng Anh của “{0}” là:',e:'“{0}” trong tiếng Anh là “{1}”.',d:V3,rev:1},
+{q:'Chọn từ thích hợp: {0}',e:'Câu hoàn chỉnh: {0}',d:[['I ___ a student.','am',['is','are','be']],['She ___ my sister.','is',['am','are','be']],['They ___ happy.','are',['is','am','be']],['I have ___ umbrella.','an',['a','two','many']],['How many ___ are there?','books',['book','a book','bookes']]]}],
+5:[
+{q:'Từ “{0}” trong tiếng Anh nghĩa là gì?',e:'“{0}” nghĩa là “{1}”.',d:V5},
+{q:'Từ tiếng Anh của “{0}” là:',e:'“{0}” trong tiếng Anh là “{1}”.',d:V5,rev:1},
+{q:'Chọn đáp án đúng: {0}',e:'Câu hoàn chỉnh: {0}',d:[['She ___ TV every evening.','watches',['watch','watching','watched']],['There ___ many students in the class.','are',['is','was','be']],['I am looking ___ my keys.','for',['at','on','to']],['Yesterday I ___ to the zoo.','went',['go','goes','going']],['He is ___ than his brother.','taller',['tall','tallest','more tall']],['We ___ football at the moment.','are playing',['play','played','plays']]]},
+{q:'Chọn đáp án đúng: {0}',e:'Đáp án: {0}',d:[['The opposite of “early” is ___.','late',['soon','fast','long']],['The plural of “child” is ___.','children',['childs','childes','childrens']],['The past tense of “see” is ___.','saw',['seed','seen','sees']],['The past tense of “eat” is ___.','ate',['eated','eaten','eats']]]}]}};
+function qa(r,G,i,used){const gi=ri(r,0,G.length-1),g=G[gi],L=g.d.length;let k=Math.min(L-1,Math.max(0,Math.round((9-i)/9*(L-1)+(r()-.5)*L*.4)));
+for(let n=0;n<L&&used.has(gi+':'+k);n++)k=(k+1)%L;used.add(gi+':'+k);
+let it=g.d[k];if(typeof it=='string')it=[it,it];if(g.rev)it=[it[1],it[0]];
+const t=it[0],a=it[1],w=[...(it[2]||[])],pool=g.w||g.d.map(x=>typeof x=='string'?x:g.rev?x[0]:x[1]);
+for(const x of sh(r,pool))if(w.length<3&&x!==a&&!w.includes(x))w.push(x);
+return mk(r,g.q.replace('{0}',t),a,w,g.e.replace(/\{0\}/g,t.replace('___',a)).replace(/\{1\}/g,a))}
+/* ===== ĐỀ SOẠN TAY THEO NGÀY: 'ngày|lớp|môn':[[đề, đáp án đúng, [3 đáp án sai], lời giải],...] xếp từ khó đến dễ; thiếu câu thì web tự sinh thêm cho đủ 10 ===== */
+const CUR={
+'2026-11-14|3|toan':[
+['Mỗi thùng sơn nặng 28 kg, mỗi bao xi măng nặng 45 kg. Hỏi 3 thùng sơn và 1 bao xi măng nặng tất cả bao nhiêu ki-lô-gam?','129 kg',['119 kg','109 kg','139 kg'],'3 thùng sơn nặng: 28 × 3 = 84 (kg). Tổng cân nặng: 84 + 45 = 129 (kg).'],
+['Giá trị của biểu thức 6 × 8 + 54 : 6 là:','57',['17','63','48'],'Nhân chia trước, cộng sau: 6 × 8 = 48; 54 : 6 = 9; 48 + 9 = 57. (Đáp án 17 là do cộng trước, sai thứ tự.)'],
+['4 dm 5 mm = ... mm','405',['45','450','4005'],'1 dm = 100 mm nên 4 dm = 400 mm. 400 mm + 5 mm = 405 mm.'],
+['Giảm 63 đi 9 lần được:','7',['54','72','8'],'Giảm đi 9 lần thì chia cho 9: 63 : 9 = 7.']],
+'2026-11-14|5|toan':[
+['Mảnh vườn hình chữ nhật có chiều dài 12,5 m và chiều rộng 8,4 m. Chu vi mảnh vườn là:','41,8 m',['20,9 m','42,8 m','83,6 m'],'Chu vi = (dài + rộng) × 2 = (12,5 + 8,4) × 2 = 20,9 × 2 = 41,8 (m). Đáp án 20,9 m là quên nhân 2.'],
+['Làm tròn số 47,386 đến hàng phần mười ta được:','47,4',['47,3','47,39','47,0'],'Hàng phần mười là chữ số 3; chữ số liền sau là 8 (từ 5 trở lên) nên làm tròn lên: 47,4.'],
+['Tính: 3,75 × 100 = ?','375',['37,5','3750','0,0375'],'Nhân số thập phân với 100: chuyển dấu phẩy sang phải 2 chữ số, được 375.'],
+['Số lớn nhất trong các số 5,09; 5,9; 5,19; 5,091 là:','5,9',['5,09','5,19','5,091'],'Phần nguyên đều là 5. So sánh hàng phần mười: 9 > 1 > 0 nên 5,9 lớn nhất.']],
+'2026-11-14|3|vi':[
+['Trong câu “Bạn Lan đang tưới cây ngoài vườn.”, bộ phận trả lời câu hỏi “Ai?” là:','Bạn Lan',['đang tưới cây','ngoài vườn','tưới cây ngoài vườn'],'Hỏi “Ai?” thì trả lời là người làm việc: “Bạn Lan”. “đang tưới cây” trả lời “làm gì?”, “ngoài vườn” trả lời “ở đâu?”.'],
+['Câu nào dưới đây có hình ảnh so sánh?','Đôi mắt bé tròn như hạt nhãn.',['Bé đang chơi ở sân.','Mẹ đi chợ từ sáng sớm.','Trời hôm nay rất nắng.'],'Câu này so sánh đôi mắt với hạt nhãn bằng từ “như”.'],
+['Trong các từ sau, từ nào chỉ hoạt động?','chạy',['xanh','bàn','thông minh'],'“chạy” chỉ hành động; “xanh”, “thông minh” chỉ đặc điểm; “bàn” chỉ sự vật.'],
+['Từ nào viết đúng chính tả?','trò chuyện',['chò chuyện','trò truyện','chò truyện'],'Viết đúng là “trò chuyện” (tr – ch).']],
+'2026-11-14|5|vi':[
+['Câu “Mặt trời như quả bóng lửa khổng lồ.” dùng biện pháp nghệ thuật nào?','So sánh',['Nhân hóa','Điệp từ','Nói quá'],'Có từ “như” so sánh mặt trời với quả bóng lửa nên đây là biện pháp so sánh.'],
+['Cặp quan hệ từ nào biểu thị quan hệ nguyên nhân – kết quả?','Vì … nên …',['Tuy … nhưng …','Nếu … thì …','Không những … mà còn …'],'“Vì … nên …” nguyên nhân – kết quả; “Tuy … nhưng …” tương phản; “Nếu … thì …” điều kiện – kết quả; “Không những … mà còn …” tăng tiến.'],
+['Từ nào là từ ghép tổng hợp (gộp chung nhiều sự vật cùng loại)?','quần áo',['xe đạp','bút chì','bàn học'],'“quần áo” gộp chung các thứ cùng loại nên là từ ghép tổng hợp; “xe đạp”, “bút chì”, “bàn học” là từ ghép phân loại.'],
+['Từ nào dưới đây là danh từ?','niềm vui',['vui vẻ','chạy nhảy','đẹp đẽ'],'“niềm vui” là danh từ trừu tượng; “vui vẻ”, “đẹp đẽ” là tính từ; “chạy nhảy” là động từ.']],
+'2026-11-14|3|en':[
+['Chọn từ đúng: There ___ two chairs in my room.','are',['is','am','be'],'Hai chiếc ghế là số nhiều nên dùng “are”: There are two chairs in my room.'],
+['Chọn câu trả lời đúng: What is this? – ___ a pencil case.','It is',['They are','I am','You is'],'Hỏi về một vật số ít: What is this? → It is a pencil case.'],
+['Which word is a school thing? (Từ nào là đồ dùng học tập?)','ruler',['banana','kitchen','tiger'],'“ruler” là thước kẻ; “banana” quả chuối; “kitchen” nhà bếp; “tiger” con hổ.'],
+['“Good morning!” là lời chào vào lúc nào?','Buổi sáng',['Buổi tối','Buổi chiều','Trước khi đi ngủ'],'“Good morning” nghĩa là chào buổi sáng.']],
+'2026-11-14|5|en':[
+['Chọn đáp án đúng: She is ___ girl in my class.','the tallest',['taller','tall','more tall'],'So sánh nhất với tính từ ngắn: the + tính từ + est → the tallest.'],
+['Chọn đáp án đúng: What ___ you do last weekend?','did',['do','does','are'],'Câu hỏi ở thì quá khứ đơn dùng trợ động từ “did”: What did you do last weekend?'],
+['Chọn đáp án đúng: My brother ___ football every Sunday.','plays',['play','playing','played'],'Thói quen hằng tuần dùng hiện tại đơn; chủ ngữ ngôi thứ ba số ít nên thêm s: plays.'],
+['Which word is a job? (Từ nào chỉ nghề nghiệp?)','farmer',['museum','holiday','delicious'],'“farmer” là nông dân (nghề nghiệp); “museum” bảo tàng, “holiday” kỳ nghỉ, “delicious” ngon.']]
+};
+function build(date,g,sub){const r=R(H(date+'|'+g+'|'+sub)),used=new Set(),Q=(CUR[date+'|'+g+'|'+sub]||[]).map(x=>mk(r,x[0],x[1],x[2],x[3]));
+for(let i=Q.length;i<10;i++){let x,n=0;do{x=sub=='toan'?math(r,g,i):qa(r,D[sub][g],i,used)}while(Q.some(y=>y.q==x.q)&&++n<8);Q.push(x)}return Q}
+/* ===== Lưu trữ, ngày tháng ===== */
+const mem={},S={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return mem[k]||null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){mem[k]=v}}};
+const SUBS=[['toan','Toán','🧮'],['vi','Tiếng Việt','📖'],['en','Tiếng Anh','🔤']],NM={toan:'Toán',vi:'Tiếng Việt',en:'Tiếng Anh'};
+const p2=n=>String(n).padStart(2,'0'),ymd=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()),pd=s=>new Date(+s.slice(0,4),+s.slice(5,7)-1,+s.slice(8,10));
+const WD=['Chủ nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+const fd=s=>{const d=pd(s);return WD[d.getDay()]+', '+p2(d.getDate())+'/'+p2(d.getMonth()+1)+'/'+d.getFullYear()};
+const ad=(s,n)=>{const d=pd(s);d.setDate(d.getDate()+n);return ymd(d)};
+const PH=1971329824;/* mã băm của PIN người lớn, đã cài sẵn cho mọi thiết bị */
+const key=(d,g,k)=>'bt:'+d+'|'+g+'|'+k,TD=()=>ymd(new Date());
+let gr=+S.get('bt:gr')||3,date=TD(),view='home',sub='toan',qi=0,adult=false,cur=null,flash='',modal=null,mm='',ow=0,warn=0,rs=0;
+const app=document.getElementById('app'),FL=()=>flash?`<div class="flash">${flash}</div>`:'';
+function render(keep){const h=view=='home'?home():view=='quiz'?quiz():view=='res'?res():par();flash='';app.innerHTML=h+(modal?mod():'');if(!keep)window.scrollTo(0,0)}
+function home(){const T=TD(),days=[...Array(7)].map((_,i)=>ad(T,-i));
+let h=`<h1>📚 Bài tập mỗi ngày</h1><div class="seg">${[3,5].map(g=>`<button class="${g==gr?'on':''}" onclick="setGr(${g})">Lớp ${g}</button>`).join('')}</div>
+<div class="card dt"><button onclick="mv(-1)">◀</button><div><b>${fd(date)}</b><small>${date==T?'Hôm nay':'Chọn ngày khác bên dưới'}</small><input type="date" value="${date}" ${adult?'':`max="${T}"`} onchange="if(this.value)setD(this.value)"></div><button onclick="mv(1)" ${!adult&&date>=T?'disabled':''}>▶</button></div>`;
+SUBS.forEach(([k,n,ic])=>{const r=S.get(key(date,gr,k)),done=r&&r.done,c=r?r.a.filter(x=>x!=null).length:0;
+h+=`<div class="card sub"><div class="ic">${ic}</div><div class="gr"><b>${n}</b><small>${done?`Điểm: <b>${r.sc}/10</b>`:c?`Đang làm: ${c}/10 câu`:'Chưa làm · 10 câu'}</small></div><div class="bt"><button class="pr" onclick="openQ('${k}')">${done?'Xem điểm':c?'Làm tiếp':'Làm bài'}</button>${adult?`<button onclick="openP('${k}')">Lời giải</button>`:''}</div></div>`});
+h+=`<h2>7 ngày gần đây</h2><div class="card">`+days.map(d=>`<div class="row ${d==date?'cur':''}" onclick="setD('${d}')"><span>${fd(d)}</span><span>${SUBS.map(([k,n,ic])=>{const r=S.get(key(d,gr,k));return`<i class="chip ${r&&r.done?'ok':''}">${ic} ${r&&r.done?r.sc+'/10':'–'}</i>`}).join('')}</span></div>`).join('')+`</div>`;
+return h+`<button class="adult" onclick="toggleAdult()">${adult?'🔓 Thoát chế độ người lớn':'🔒 Dành cho người lớn (xem lời giải)'}</button>`}
+function quiz(){const{Q,R}=cur,q=Q[qi];
+return`<div class="top"><button onclick="go()">← Về</button><b>${NM[sub]} · Lớp ${gr}</b></div><small class="mu">${fd(date)}</small>
+<div class="chips">${Q.map((_,i)=>`<button class="n ${i==qi?'cu':''} ${R.a[i]!=null?'an':''}" onclick="jq(${i})">${i+1}</button>`).join('')}</div>
+<div class="card"><div class="qn">Câu ${qi+1}/10</div><div class="qt">${q.q}</div>${q.o.map((o,j)=>`<button class="opt ${R.a[qi]==j?'sel':''}" onclick="pick(${j})"><b>${'ABCD'[j]}</b><span>${o}</span></button>`).join('')}</div>
+<div class="nav"><button ${qi?'':'disabled'} onclick="jq(${qi-1})">← Câu trước</button><button ${qi<9?'':'disabled'} onclick="jq(${qi+1})">Câu sau →</button></div>${FL()}<button class="pr adult" onclick="submit()">Nộp bài ✔</button>`}
+function res(){const{Q,R}=cur,s=R.sc,m=s>=9?'Xuất sắc! 🌟':s>=7?'Giỏi lắm! 👏':s>=5?'Khá tốt, cố gắng thêm nhé 💪':'Đừng nản, cùng ôn lại nhé 🌱';
+return`<div class="top"><button onclick="go()">← Về</button><b>${NM[sub]} · Lớp ${gr}</b></div><small class="mu">${fd(date)}</small>
+<div class="card c"><div class="big">${s}/10</div><div>${m}</div></div>
+<div class="chips">${Q.map((q,i)=>`<span class="n ${R.a[i]===q.a?'ok':'bad'}">${i+1} ${R.a[i]===q.a?'✓':'✗'}</span>`).join('')}</div>
+<p class="mu">Những câu có dấu ✗ hãy nhờ người lớn giảng lại nhé. Lời giải chỉ người lớn mới xem được.</p>${adult?`<button class="pr adult" onclick="openP('${sub}')">Xem lời giải</button>`:`<button class="adult" onclick="toggleAdult()">🔒 Người lớn xem lời giải</button>`}`}
+function par(){const{Q,R}=cur;
+return`<div class="top"><button onclick="go()">← Về</button><b>Lời giải · ${NM[sub]} · Lớp ${gr}</b></div><small class="mu">${fd(date)}</small>
+<div class="card">${R.done?`Điểm: <b>${R.sc}/10</b> · nộp lúc ${new Date(R.t).toLocaleString('vi-VN')}`:'Bé chưa nộp bài. Dưới đây là đáp án và lời giải của đề hôm nay.'}
+<div class="nav">${R.done?`<button onclick="ow=!ow;render(1)">${ow?'Hiện tất cả câu':'Chỉ hiện câu sai'}</button><button onclick="resetR()">Làm lại (xóa kết quả)</button>`:''}</div></div>${FL()}`+
+Q.map((q,i)=>{const a=R.a[i],ok=a===q.a;if(ow&&ok)return'';
+return`<div class="card ${R.done?ok?'g':'r':''}"><div class="qn">Câu ${i+1} ${R.done?ok?'· ✓ Đúng':a==null?'· ✗ Bỏ trống':'· ✗ Sai':''}</div><div class="qt">${q.q}</div>${q.o.map((o,j)=>`<div class="po ${j==q.a?'c':''} ${a==j&&j!=q.a?'w':''}"><b>${'ABCD'[j]}.</b> ${o}${j==q.a?' ✓ đáp án đúng':''}${a==j&&j!=q.a?' ← bé đã chọn':''}</div>`).join('')}<div class="ex">💡 ${q.e}</div></div>`}).join('')}
+const mod=()=>`<div class="mo"><div class="card"><b>${modal=='set'?'Tạo mã PIN cho người lớn (4–8 chữ số)':'Nhập mã PIN người lớn'}</b>${mm?`<div class="flash">${mm}</div>`:''}<input id="pin" type="password" inputmode="numeric" maxlength="8" autocomplete="off"><div class="nav"><button onclick="modal=null;mm='';render(1)">Hủy</button><button class="pr" onclick="pinGo()">OK</button></div></div></div>`;
+function load(k){sub=k;cur={Q:build(date,gr,k),R:S.get(key(date,gr,k))||{a:Array(10).fill(null),done:0}}}
+function setGr(g){gr=g;S.set('bt:gr',g);render(1)}
+function setD(d){date=!adult&&d>TD()?TD():d;render(1)}
+function mv(n){setD(ad(date,n))}
+function go(){view='home';render()}
+function openQ(k){load(k);if(cur.R.done)view='res';else{view='quiz';qi=Math.max(0,cur.R.a.findIndex(x=>x==null))}warn=0;render()}
+function openP(k){if(!adult)return;load(k);ow=0;rs=0;view='par';render()}
+function jq(i){qi=i;render()}
+function pick(j){cur.R.a[qi]=j;S.set(key(date,gr,sub),cur.R);render(1)}
+function submit(){const{Q,R}=cur,n=R.a.filter(x=>x==null).length;
+if(n&&!warn){warn=1;flash=`Còn ${n} câu chưa làm. Bấm “Nộp bài” lần nữa để chốt bài.`;return render(1)}
+R.sc=Q.filter((q,i)=>R.a[i]===q.a).length;R.done=1;R.t=Date.now();S.set(key(date,gr,sub),R);warn=0;view='res';render()}
+function toggleAdult(){if(adult){adult=false}else modal='in';render(1)}
+function pinGo(){const v=document.getElementById('pin').value;
+if(H('pin|'+v)!==PH){mm='Sai mã PIN.';return render(1)}
+adult=true;modal=null;mm='';render(1)}
+function resetR(){if(!rs){rs=1;flash='Bấm “Làm lại” thêm một lần nữa để xóa kết quả môn này.';return render(1)}
+rs=0;S.set(key(date,gr,sub),null);view='home';render()}
+render();
+</script></body></html>
